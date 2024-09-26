@@ -1,6 +1,7 @@
 export interface MaintenanceEntity {
     technician : string;
     machine : string;
-    status: string;
+    Scheduled: boolean;
     date: Date;
+    AllowForUse: boolean;
 }

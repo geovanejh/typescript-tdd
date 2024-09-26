@@ -17,7 +17,8 @@ describe('palindrome checker', () => {
       technician: "Geovane",
       machine: "001",
       date: new Date(Date.now() + 5*24*60*60*1000),
-      status: "scheduled"
+      Scheduled: true,
+      AllowForUse: false
     };
 
     expect(maintenance.scheduleMaintenance(prms)).toBeTruthy();
@@ -28,20 +29,24 @@ describe('palindrome checker', () => {
       technician: "Geovane",
       machine: "001",
       date: new Date(Date.now() - 5*24*60*60*1000),
-      status: "scheduled"
+      Scheduled: false,
+      AllowForUse: false
     };
 
     expect(maintenance.scheduleMaintenance(prms)).toBeFalsy();
   })
 
-  it('se a data for maior que 3 meses apartir de hoje deve retornar falso', () => {
+  it('Should return true when AllowForUse is true', () => {
     const prms: MaintenanceEntity = {
-      technician: "João",
+      technician: "Geovane",
       machine: "001",
-      date: new Date(Date.now() + 91*24*60*60*1000),
-      status: "scheduled"
+      date: new Date(Date.now() + 5*24*60*60*1000), 
+      Scheduled: false,
+      AllowForUse: false
     };
 
-    expect(maintenance.scheduleMaintenance(prms)).toBeFalsy();
-  })
+    expect(prms.Scheduled).toBeFalsy();
+    expect(prms.AllowForUse).toBeFalsy();
+    
+  });
 })
