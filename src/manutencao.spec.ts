@@ -47,6 +47,5 @@ describe('palindrome checker', () => {
 
     expect(prms.Scheduled).toBeFalsy();
     expect(prms.AllowForUse).toBeFalsy();
-    
   });
 })

@@ -4,4 +4,5 @@ export interface MaintenanceEntity {
     Scheduled: boolean;
     date: Date;
     AllowForUse: boolean;
+    
 }

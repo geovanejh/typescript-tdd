@@ -14,4 +14,5 @@ export class Maintenance {
   public isScheduled(params: MaintenanceEntity): boolean {
     return params.Scheduled
   }
+  
 }
