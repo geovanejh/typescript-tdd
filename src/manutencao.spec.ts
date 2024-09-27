@@ -44,4 +44,15 @@ describe('palindrome checker', () => {
 
     expect(maintenance.scheduleMaintenance(prms)).toBeFalsy();
   })
+
+  it('se os campos tecnico e maquina for invalido deve retornar falso', () => {
+    const prms: MaintenanceEntity = {
+      technician: "",
+      machine: "",
+      date: new Date(Date.now() + 91*24*60*60*1000),
+      status: "scheduled"
+    };
+
+    expect(maintenance.scheduleMaintenance(prms)).toBeFalsy();
+  });
 })
