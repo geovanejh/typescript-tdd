@@ -1,19 +1,45 @@
-import { MaintenanceEntity } from "./MaintenanceEntity";
+import { MaintenanceEntity, UserEntity } from "./Entity";
 
 export class Maintenance {
   private maintenances: MaintenanceEntity[] = [];
 
-  public scheduleMaintenance(params: MaintenanceEntity): boolean {
-    console.log(params)
-    this.maintenances.push(params);
-    return params.date < new Date(Date.now()) ? false : true
+  private isUserAlowedToScheduleMaintenance(user: UserEntity): boolean {
+    console.log(user.role);
+    return user.role !== "Technician";
   }
 
-  public getMaintenanceByMachineAndPeriod(machine: string, startDate: Date, endDate: Date): number {
-    return this.maintenances.filter(m => 
-      m.machine === machine &&
-      m.date >= startDate &&
-      m.date <= endDate
+  private isMaintenanceDateValid(date: Date): boolean {
+    return date < new Date(Date.now());
+  }
+
+  public scheduleMaintenance(params: MaintenanceEntity): string {
+    if (this.isMaintenanceDateValid(params.date)) {
+      return "Error - Invalid Date";
+    }
+
+    if (this.isUserAlowedToScheduleMaintenance(params.technician)) {
+      return "Error - Unauthorized";
+    } else {
+      this.maintenances.push(params);
+      return "Maintenance scheduled";
+    }
+  }
+
+  public getMaintenanceByMachineAndPeriod(
+    machine: string,
+    startDate: Date,
+    endDate: Date
+  ): number {
+    return this.maintenances.filter(
+      (m) => m.machine === machine && m.date >= startDate && m.date <= endDate
     ).length;
+  }
+
+  public finnishMaintenance(params: MaintenanceEntity): string {
+    if (this.isUserAlowedToScheduleMaintenance(params.technician)) {
+      return "Error - Unauthorized";
+    } else {
+      return "Success!";
+    }
   }
 }
