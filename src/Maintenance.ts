@@ -42,4 +42,13 @@ export class Maintenance {
       return "Success!";
     }
   }
+
+  public createEmergencialMaintenance(params: MaintenanceEntity): boolean {
+    if (params.status != "emergency") {
+      return false;
+    } else {
+      this.maintenances.push(params);
+      return true;
+    }
+  }
 }

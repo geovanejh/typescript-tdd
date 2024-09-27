@@ -164,3 +164,21 @@ describe("maintenance reports check", () => {
     ).toBe(0);
   });
 });
+
+describe("emergencial maintenance checks", () => {
+  let maintenance: Maintenance;
+  beforeEach(() => {
+    maintenance = new Maintenance();
+  });
+
+  it("should return true when give the correct status to the Maintenance: emergency", () => {
+    const prms: MaintenanceEntity = {
+      technician: technician,
+      machine: "002",
+      date: new Date(Date.now()),
+      status: "emergency",
+    };
+
+    expect(maintenance.createEmergencialMaintenance(prms)).toBeTruthy();
+  });
+});

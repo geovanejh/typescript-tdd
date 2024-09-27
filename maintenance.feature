@@ -5,6 +5,9 @@ Feature: Controle de manutenções
         Quando Eu agendo uma manutenção para uma máquina específica
         Então O sistema válida as informações e confirma o agendamento.
 
+    - A data de agendamento da manutenção não pode ser inferior a data atual.
+    - O técnico responsável pela manutenção deve estar atribuído ao papel "Técnico" no sistema.
+
     Cenário: Gerente de produção solicita a um relatório com o total de manutenções de uma maquina
         Dado que eu sou um gerente de produção
         Quando eu solicito um relatório sintético de manutenções
