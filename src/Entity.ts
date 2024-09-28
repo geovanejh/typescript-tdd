@@ -1,4 +1,5 @@
 export interface MaintenanceEntity {
+    id: number;
     technician : UserEntity;
     machine : string;
     status: string;

@@ -20,6 +20,7 @@ describe("Maintenance schedule checks", () => {
   it('should return "Error - Invalid Date" when given a date lower than today', () => {
     expect(
       maintenance.scheduleMaintenance({
+        id: 1,
         technician: technician,
         machine: "00222",
         date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
@@ -36,6 +37,7 @@ describe("Maintenance schedule checks", () => {
 
     expect(
       maintenance.scheduleMaintenance({
+        id: 1,
         technician: user,
         machine: "00222",
         date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
@@ -47,6 +49,7 @@ describe("Maintenance schedule checks", () => {
   it('should return "Maintenance scheduled" when given valid parameters', () => {
     expect(
       maintenance.scheduleMaintenance({
+        id: 1,
         technician: technician,
         machine: "001",
         date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
@@ -71,6 +74,7 @@ describe("Maintenance conclusion checks", () => {
 
     expect(
       maintenance.finnishMaintenance({
+        id: 1,
         technician: user,
         machine: "01",
         date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
@@ -82,6 +86,7 @@ describe("Maintenance conclusion checks", () => {
   it('should return "Success!" when given valid parameters', () => {
     expect(
       maintenance.finnishMaintenance({
+        id: 1,
         technician: technician,
         machine: "01",
         date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
@@ -99,24 +104,28 @@ describe("maintenance reports check", () => {
 
   it("should return the total number of maintenances for a machine within a specific period", () => {
     maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "001",
       date: new Date("2024-12-15"),
       status: "scheduled",
     });
     maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "001",
       date: new Date("2024-12-10"),
       status: "scheduled",
     });
     maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "001",
       date: new Date("2024-12-22"),
       status: "scheduled",
     });
     maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "002",
       date: new Date("2024-12-05"),
@@ -133,24 +142,28 @@ describe("maintenance reports check", () => {
 
   it("should return 0 when given an invalid machine or date", () => {
     maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "001",
       date: new Date("2024-12-15"),
       status: "scheduled",
     });
     maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "001",
       date: new Date("2024-12-10"),
       status: "scheduled",
     });
     maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "001",
       date: new Date("2024-12-22"),
       status: "scheduled",
     });
     maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "002",
       date: new Date("2024-12-05"),
@@ -162,5 +175,51 @@ describe("maintenance reports check", () => {
     expect(
       maintenance.getMaintenanceByMachineAndPeriod("003", startDate, endDate)
     ).toBe(0);
+  });
+});
+
+describe('Should delete the appointment', () =>{
+  let maintenance: Maintenance;
+
+  beforeEach(() => {
+    maintenance = new Maintenance();
+  })
+
+  it('Should delete valid', () => {
+    const prms1: MaintenanceEntity = {
+      id: 1,
+      technician: technician,
+      machine: "001",
+      date: new Date('2024-01-15'),
+      status: "scheduled"
+    };
+  
+    const prms2: MaintenanceEntity = {
+      id: 2,
+      technician: technician,
+      machine: "001",
+      date: new Date('2024-03-10'),
+      status: "scheduled"
+    };
+  
+    maintenance.scheduleMaintenance(prms1);
+    maintenance.scheduleMaintenance(prms2);
+
+    expect(maintenance.removeMaintenance(1)).toBeTruthy()
+  });
+
+  it('Should return invalid if maintenance is not found', () => {
+  
+    const prms2: MaintenanceEntity = {
+      id: 5,
+      technician: technician,
+      machine: "001",
+      date: new Date('2024-03-10'),
+      status: "scheduled"
+    };
+
+    maintenance.scheduleMaintenance(prms2);
+
+    expect(maintenance.removeMaintenance(10)).toBeFalsy()
   });
 });

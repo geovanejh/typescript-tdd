@@ -42,4 +42,19 @@ export class Maintenance {
       return "Success!";
     }
   }
+
+  public removeMaintenance(id: number): boolean {
+    console.log(this.maintenances) 
+    let maintenance = this.maintenances.findIndex((m) => m.id === id);
+     console.log(maintenance)
+     
+
+     if(maintenance !== -1){
+      this.maintenances.splice(maintenance, 1);
+
+      return true;        
+     }
+
+     return false;       
+  }
 }
