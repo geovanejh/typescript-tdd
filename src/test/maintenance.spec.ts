@@ -186,39 +186,34 @@ describe('Should delete the appointment', () =>{
   })
 
   it('Should delete valid', () => {
-    const prms1: MaintenanceEntity = {
+    maintenance.scheduleMaintenance({
       id: 1,
       technician: technician,
       machine: "001",
-      date: new Date('2024-01-15'),
-      status: "scheduled"
-    };
-  
-    const prms2: MaintenanceEntity = {
-      id: 2,
+      date: new Date("2024-12-22"),
+      status: "scheduled",
+    });
+
+    maintenance.scheduleMaintenance({
+      id: 1,
       technician: technician,
       machine: "001",
-      date: new Date('2024-03-10'),
-      status: "scheduled"
-    };
-  
-    maintenance.scheduleMaintenance(prms1);
-    maintenance.scheduleMaintenance(prms2);
+      date: new Date("2024-12-22"),
+      status: "scheduled",
+    });
 
     expect(maintenance.removeMaintenance(1)).toBeTruthy()
   });
 
   it('Should return invalid if maintenance is not found', () => {
   
-    const prms2: MaintenanceEntity = {
+    maintenance.scheduleMaintenance({
       id: 5,
       technician: technician,
       machine: "001",
-      date: new Date('2024-03-10'),
-      status: "scheduled"
-    };
-
-    maintenance.scheduleMaintenance(prms2);
+      date: new Date("2024-12-22"),
+      status: "scheduled",
+    });
 
     expect(maintenance.removeMaintenance(10)).toBeFalsy()
   });
